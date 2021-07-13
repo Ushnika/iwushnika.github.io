@@ -6,9 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio</title>
     <style>
+        .info{
+            /* background-image: url('./img/bg-img.jpg'); */
+            background-color: rgb(189 206 243);
+            padding: 10px;
+        }
         .main{
             text-align: center;
         }
+
     </style>
 </head>
 <body>
@@ -20,14 +26,32 @@
             height="100"
             width="100"
             id="profileImage"
+            style="border-radius: 50%; margin-bottom:-30px; margin-top: 10px;"
             >
+            <div class="info">
             <h2 id = "fullName"></h2>
-            <p id = "bio"></p>
-            <h5 id="followersInformation"></h5>
+            <p style="font-weight: 150;" id = "bio"></p>
+            <p style="font-style: bold;" id="followersInformation"></p>
             <p>
                 Check me on <a id = "githubLink">Github</a>
             </p>
+            <h6 style="font-size: 15px;"> Have a look on my project name by clicking below button:</h6>
+            <div>
+                <button 
+                    onclick="myFunction()"
+                    style="background-color:#008000db; color:white; border:1px solid black; padding: 8px;
+                        border-radius:5px"
+                >
+                    My Project
+                </button>
+                <p id="name"></p>
+            </div>
+            <!-- <h4>MY PROJECTS</h4>
+            <p id ="name"></p>
+            <p id = "description"></p> -->
+              
             <a class="twitter-timeline" data-width="300" data-height="400" href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw">Tweets by TwitterDev</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
     </div>   
     <script>
         fetch('https://api.github.com/users/Ushnika')
@@ -36,7 +60,7 @@
             console.log(data)
 
             let followersCount = data['followers']
-            let followersInfo = 'I have been followed by'+ ' ' + followersCount + ' ' + 'awesome People on Github'
+            let followersInfo = 'I have been followed by'+ ' ' + followersCount + ' ' + 'people on Github'
             document.getElementById('profileImage').src= data['avatar_url']
             document.getElementById('fullName').textContent = data['name']
             document.getElementById('bio').textContent = data['bio']
@@ -45,9 +69,41 @@
 
             document.getElementById('mainContainer').hidden = false
             document.getElementById('loading').hidden = true
+           
 
 
         })
+  
     </script>
+
+    <script>
+             function myFunction(){
+             fetch('https://api.github.com/users/Ushnika/repos')
+             .then(response =>response.json())
+                .then(function(data){
+                console.log(data)
+                let m = data.length;
+                var n = parseInt(m);
+                let Name = "";
+             
+                for(i = 0;i < n; i++ )
+                {
+                    Name +=  data[i]['name'] +"<br>"+ "<br>";
+                }
+                document.getElementById('name').innerHTML = Name
+                })
+            }
+    </script>
+     <!-- <script>
+        fetch('https://api.github.com/users/Ushnika/repos')
+        .then(response => response.json())
+        .then(function(data){
+            console.log(data['name'])
+            function myFunction() {
+                document.getElementById("name").textContent = data['name']
+            }
+
+        })
+    </script> -->
 </body>
 </html>
